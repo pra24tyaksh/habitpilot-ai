@@ -11,19 +11,27 @@ import aiRoutes from "./routes/ai.js";
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  process.env.CLIENT_URL,
-].filter(Boolean);
+  "https://habitpilot-byfzjhm8b-pratyaksh3.vercel.app",
+];
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
+  origin(origin, cb) {
+    if (!origin) {
+      return cb(null, true);
     }
+
+    if (allowedOrigins.includes(origin)) {
+      return cb(null, true);
+    }
+
+    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
+      return cb(null, true);
+    }
+
+    console.log("Blocked CORS origin:", origin);
+    return cb(new Error(`Origin ${origin} not allowed by CORS`));
   },
+
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
