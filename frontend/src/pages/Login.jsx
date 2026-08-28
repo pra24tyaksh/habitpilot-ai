@@ -48,7 +48,7 @@ export default function Login() {
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white flex items-center justify-center shadow-lg shadow-brand-500/30">
             <Sparkles size={18} />
           </div>
-          <span className="font-semibold text-lg">AI Habit Tracker</span>
+          <span className="font-semibold text-lg">HabitPilot AI</span>
         </Link>
 
         <div className="card p-7">
