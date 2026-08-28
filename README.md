@@ -1,5 +1,5 @@
-﻿# AIHabitTracker
-# 🤖 AI Habit Tracker
+﻿# HabitPilot AI
+# 🤖 HabitPilot AI
 
 A full-stack AI-powered habit tracking application that helps users build consistent habits, monitor their progress, analyze performance, and receive personalized AI-generated insights and motivation.
 
