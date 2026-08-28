@@ -10,28 +10,23 @@ import aiRoutes from "./routes/ai.js";
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_URL || "")
-.split(",")
-.map(origin => origin.trim())
-.filter(Boolean);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
 const corsOptions = {
-    origin(origin, cb){
-        // Allow requests that don't have an Origin header
-        if (!origin) {
-            return cb(null, true);
-        }
-        if(/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
-            return cb(null, true);
-        } 
-        if (allowedOrigins.includes(origin)) {
-            return cb(null, true);
-        }
-        return cb(new Error(`Origin ${origin} not allowed by CORS`));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
